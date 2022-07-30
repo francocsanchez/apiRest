@@ -1,5 +1,6 @@
 const models = {
-    userModel: require('./Users')
+    userModel: require('./Users'),
+    customersModel: require('./Customers')
 }
 
 module.exports = models;
