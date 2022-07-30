@@ -1,10 +1,14 @@
 const { customersModel } = require('../models');
 
 // TODO: Listar clientes
-const getItems = async (req, res) => {
-    const data = await customersModel.find({});
-
-    res.send({ data });
+const getItems = async (req, res, next) => {
+    try {
+        const data = await customersModel.find({});
+        res.json(data);
+    } catch (error) {
+        console.log(error);
+        next();
+    }
 }
 
 // TODO: Crear cliente
