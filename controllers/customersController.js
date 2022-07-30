@@ -11,6 +11,17 @@ const getItems = async (req, res, next) => {
     }
 }
 
+// TODO: Listar cliente
+const getItem = async (req, res, next) => {
+    const data = await customersModel.findById(req.params.id);
+    
+    if (!data) {
+        res.json({ msj: 'El cliente no existe' });
+        next();
+    }
+    res.json(data);
+}
+
 // TODO: Crear cliente
 const createItem = async (req, res, next) => {
     const customer = new customersModel(req.body);
@@ -26,5 +37,6 @@ const createItem = async (req, res, next) => {
 
 module.exports = {
     getItems,
+    getItem,
     createItem
 }
