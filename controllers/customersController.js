@@ -38,8 +38,18 @@ const createItem = async (req, res, next) => {
 // TODO: Actualizar cliente
 const updateItem = async (req, res, next) => {
     try {
-        const data = await customersModel.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        const data = await customersModel.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true });
         res.json(data)
+    } catch (error) {
+        console.log(error);
+        next();
+    }
+}
+
+const deleteItem = async (req, res, next) => {
+    try {
+        await customersModel.findOneAndDelete({ _id: req.params.id });
+        res.json({ msj: 'Cliente eliminado correctamente' });
     } catch (error) {
         console.log(error);
         next();
@@ -50,5 +60,6 @@ module.exports = {
     getItems,
     getItem,
     createItem,
-    updateItem
+    updateItem,
+    deleteItem
 }
