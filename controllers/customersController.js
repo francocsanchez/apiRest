@@ -1,12 +1,26 @@
 const { customersModel } = require('../models');
 
-// TODO: Listar usuarios
+// TODO: Listar clientes
 const getItems = async (req, res) => {
     const data = await customersModel.find({});
-    
+
     res.send({ data });
 }
 
+// TODO: Crear cliente
+const createItem = async (req, res, next) => {
+    const customer = new customersModel(req.body);
+
+    try {
+        await customer.save();
+        res.json({ msj: 'Cliente creado correctamente' });
+    } catch (error) {
+        console.log(error);
+        next();
+    }
+}
+
 module.exports = {
-    getItems
+    getItems,
+    createItem
 }
