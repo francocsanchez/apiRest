@@ -68,7 +68,17 @@ const createItem = async (req, res, next) => {
 // TODO: Actualizar producto
 const updateItem = async (req, res, next) => {
     try {
-        const data = await productsModel.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true });
+        let product = await productsModel.findById(req.paramas.id);
+
+        let newProduct = req.body
+
+        if (req.file) {
+            newProduct.img = req.file.filename;
+        } else {
+            newProduct.img = product.img
+        }
+
+        const data = await productsModel.findOneAndUpdate({ _id: req.params.id }, newProduct, { new: true });
         res.json(data)
     } catch (error) {
         console.log(error);
