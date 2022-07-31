@@ -12,8 +12,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
 // TODO: Main de rutas
-const { customersRoutes } = require('./routes/Index');
+const { customersRoutes, productsRoutes } = require('./routes/Index');
 app.use('/customers', customersRoutes);
+app.use('/products', productsRoutes);
 
 app.listen(process.env.APP_PORT || 3000, () => {
     console.log('*** Server running ***');
