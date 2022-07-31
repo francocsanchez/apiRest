@@ -1,5 +1,34 @@
 const { productsModel } = require('../models');
 
+const multer = require('multer');
+const shortid = require('shortid');
+
+//* Configuracion de multer
+const configMulter = {
+    storage: fileStorage = multer.diskStorage({
+        destination: (req, file, cb) => { cb(null, __dirname + '../../uploads'); },
+        filename: (req, file, cb) => {
+            const extension = file.mimetype.split('/')[1];
+            cb(null, `${shortid.generate()}.${extension}`);
+        }
+    }),
+    fileFilter(req, file, cb) {
+        if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+            cb(null, true);
+        } else { cb(new Error('Formato no válido'), false); }
+    }
+}
+
+//* Subir imagen
+const upload = multer(configMulter).single('img');
+
+const uploadImg = (req, res, next) => {
+    upload(req, res, function (error) {
+        if (error) { res.json({ msj: error }) }
+        return next();
+    })
+}
+
 // TODO: Listar productos
 const getItems = async (req, res, next) => {
     try {
@@ -24,10 +53,11 @@ const getItem = async (req, res, next) => {
 
 // TODO: Crear producto
 const createItem = async (req, res, next) => {
-    const customer = new productsModel(req.body);
+    const product = new productsModel(req.body);
 
     try {
-        await customer.save();
+        if (req.file.filename) { product.img = req.file.filename }
+        await product.save();
         res.json({ msj: 'Producto creado correctamente' });
     } catch (error) {
         console.log(error);
@@ -58,6 +88,7 @@ const deleteItem = async (req, res, next) => {
 }
 
 module.exports = {
+    uploadImg,
     getItems,
     getItem,
     createItem,

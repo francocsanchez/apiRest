@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
 
-const { getItems, createItem, getItem, updateItem, deleteItem } = require('../controllers/productsController');
+const { uploadImg, getItems, createItem, getItem, updateItem, deleteItem } = require('../controllers/productsController');
 
 // TODO: Productos rutas
 router.get('/', getItems);
-router.post('/', createItem);
+router.post('/', uploadImg, createItem);
 router.get('/:id', getItem);
 router.put('/:id', updateItem);
 router.delete('/:id', deleteItem);
