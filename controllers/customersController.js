@@ -46,6 +46,7 @@ const updateItem = async (req, res, next) => {
     }
 }
 
+// TODO: Eliminar cliente
 const deleteItem = async (req, res, next) => {
     try {
         await customersModel.findOneAndDelete({ _id: req.params.id });
