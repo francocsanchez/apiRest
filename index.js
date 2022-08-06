@@ -17,6 +17,9 @@ app.use('/customers', customersRoutes);
 app.use('/products', productsRoutes);
 app.use('/orders', ordersRoutes);
 
+//* Carpeta publica de archivos
+app.use(express.static('uploads'));
+
 app.listen(process.env.APP_PORT || 3000, () => {
     console.log('*** Server running ***');
     console.log(`http://localhost/${process.env.APP_PORT || 3000}`);
