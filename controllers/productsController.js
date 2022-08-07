@@ -67,8 +67,9 @@ const createItem = async (req, res, next) => {
 
 // TODO: Actualizar producto
 const updateItem = async (req, res, next) => {
+    console.log(req.params.id)
     try {
-        let product = await productsModel.findById(req.paramas.id);
+        let product = await productsModel.findById(req.params.id);
 
         let newProduct = req.body
 
@@ -79,7 +80,7 @@ const updateItem = async (req, res, next) => {
         }
 
         const data = await productsModel.findOneAndUpdate({ _id: req.params.id }, newProduct, { new: true });
-        res.json(data)
+        res.json({msj: 'Producto actualizado correctamente'})
     } catch (error) {
         console.log(error);
         next();
