@@ -7,7 +7,7 @@ const { uploadImg, getItems, createItem, getItem, updateItem, deleteItem } = req
 router.get('/', getItems);
 router.post('/', uploadImg, createItem);
 router.get('/:id', getItem);
-router.put('/:id', updateItem);
+router.put('/:id', uploadImg, updateItem);
 router.delete('/:id', deleteItem);
 
 module.exports = router;

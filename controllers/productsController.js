@@ -67,7 +67,6 @@ const createItem = async (req, res, next) => {
 
 // TODO: Actualizar producto
 const updateItem = async (req, res, next) => {
-    console.log(req.params.id)
     try {
         let product = await productsModel.findById(req.params.id);
 
